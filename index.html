@@ -1075,107 +1075,158 @@
             background: #e63946;
         }
 
-        /* Category Filter Nav Dock */
+        /* =============================================
+           CATEGORY NAVIGATION CARDS TRACK (FOOD APP DESIGN)
+        =============================================== */
         .menu-filter-bar-wrapper {
-            max-width: 1060px;
-            margin: 0 auto 42px;
-            padding: 8px 12px;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1.5px solid rgba(247, 147, 30, 0.25);
-            border-radius: 60px;
-            box-shadow: 0 14px 42px rgba(247, 147, 30, 0.14), 0 4px 16px rgba(0, 0, 0, 0.04);
+            max-width: 1140px;
+            margin: 0 auto 44px;
+            padding: 12px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(253, 242, 233, 0.8));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 2px solid rgba(247, 147, 30, 0.2);
+            border-radius: 24px;
+            box-shadow: 0 16px 48px rgba(247, 147, 30, 0.12), 0 4px 16px rgba(0, 0, 0, 0.04);
             position: relative;
             z-index: 5;
         }
 
         .menu-filter-bar {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            display: grid;
+            grid-template-columns: repeat(9, minmax(105px, 1fr));
+            gap: 12px;
             overflow-x: auto;
             scrollbar-width: none;
             -ms-overflow-style: none;
-            padding: 4px;
-            border-radius: 50px;
-            justify-content: flex-start;
+            padding: 4px 2px;
+            scroll-snap-type: x mandatory;
         }
 
         .menu-filter-bar::-webkit-scrollbar {
             display: none;
         }
 
-        @media (min-width: 992px) {
-            .menu-filter-bar {
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-        }
-
-        .menu-tab {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 22px;
-            border-radius: 50px;
-            border: 1.5px solid transparent;
-            background: rgba(247, 147, 30, 0.06);
-            color: var(--text-dark);
-            font-weight: 700;
-            font-size: 0.92rem;
-            cursor: pointer;
-            white-space: nowrap;
-            flex-shrink: 0;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-            user-select: none;
-        }
-
-        .menu-tab .tab-icon-wrap {
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            background: #ffffff;
-            display: inline-flex;
+        .menu-cat-card {
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 1.15rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-            flex-shrink: 0;
+            padding: 16px 8px 14px;
+            border-radius: 18px;
+            border: 1.5px solid rgba(247, 147, 30, 0.14);
+            background: #ffffff;
+            color: var(--text-dark);
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            user-select: none;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+            scroll-snap-align: start;
         }
 
-        .menu-tab:hover {
-            background: var(--orange-100);
-            color: var(--orange-600);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(247, 147, 30, 0.22);
+        .cat-card-top {
+            margin-bottom: 8px;
+            position: relative;
         }
 
-        .menu-tab:hover .tab-icon-wrap {
+        .cat-card-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FFF5EC, #FDE8E5);
+            border: 2px solid rgba(247, 147, 30, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            transition: all 0.35s ease;
+            box-shadow: 0 4px 12px rgba(247, 147, 30, 0.15);
+        }
+
+        .cat-card-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .cat-card-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.2;
+            transition: color 0.3s ease;
+        }
+
+        .cat-card-count {
+            font-size: 0.73rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+        }
+
+        /* Hover State */
+        .menu-cat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--orange-400);
+            box-shadow: 0 10px 24px rgba(247, 147, 30, 0.25);
+            background: #FFFDFB;
+        }
+
+        .menu-cat-card:hover .cat-card-avatar {
             transform: scale(1.12) rotate(-8deg);
-            background: var(--orange-500);
-            color: #ffffff;
-        }
-
-        .menu-tab.active {
             background: linear-gradient(135deg, #FF6B35, #E63946);
             color: #ffffff;
             border-color: transparent;
-            box-shadow: 0 8px 25px rgba(230, 57, 70, 0.45);
-            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 6px 18px rgba(230, 57, 70, 0.4);
         }
 
-        .menu-tab.active .tab-icon-wrap {
-            background: rgba(255, 255, 255, 0.25);
-            transform: rotate(-12deg) scale(1.18);
-            box-shadow: none;
+        /* Active State */
+        .menu-cat-card.active {
+            background: linear-gradient(145deg, #1C0D05, #2D1409);
+            border-color: #FF6B35;
+            box-shadow: 0 12px 30px rgba(28, 13, 5, 0.35), 0 0 16px rgba(255, 107, 53, 0.3);
+            transform: translateY(-4px);
         }
 
-        .menu-tab.active span {
+        .menu-cat-card.active .cat-card-avatar {
+            background: linear-gradient(135deg, #FF6B35, #E63946);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.15) rotate(-6deg);
+            box-shadow: 0 6px 20px rgba(230, 57, 70, 0.5);
+        }
+
+        .menu-cat-card.active .cat-card-title {
             color: #ffffff;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+            font-weight: 800;
+        }
+
+        .menu-cat-card.active .cat-card-count {
+            color: #F7931E;
+        }
+
+        /* Active top accent indicator bar */
+        .menu-cat-card.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 25%;
+            right: 25%;
+            height: 3px;
+            background: linear-gradient(90deg, #FF6B35, #F7931E);
+            border-radius: 0 0 4px 4px;
+        }
+
+        @media (max-width: 1100px) {
+            .menu-filter-bar {
+                display: flex;
+                flex-wrap: nowrap;
+            }
+            .menu-cat-card {
+                min-width: 105px;
+            }
         }
 
         /* Category Section Block */
@@ -2551,35 +2602,89 @@
                 <button id="menu-search-clear" class="menu-search-clear" title="Clear search">✕</button>
             </div>
 
-            <!-- FILTER TABS NAV DOCK -->
+            <!-- FILTER CATEGORY VISUAL CARDS TRACK -->
             <div class="menu-filter-bar-wrapper reveal reveal-delay-1">
                 <div class="menu-filter-bar" id="menu-tabs">
-                    <button class="menu-tab active ripple-container" data-target="menu-all">
-                        <span class="tab-icon-wrap">🍽️</span><span>All Items</span>
+                    <button class="menu-tab menu-cat-card active ripple-container" data-target="menu-all">
+                        <div class="cat-card-top">
+                            <div class="cat-card-avatar">🍽️</div>
+                        </div>
+                        <div class="cat-card-info">
+                            <span class="cat-card-title">All Items</span>
+                            <span class="cat-card-count">Full Menu</span>
+                        </div>
                     </button>
-                    <button class="menu-tab ripple-container" data-target="menu-burger">
-                        <span class="tab-icon-wrap">🍔</span><span>Burgers</span>
+                    <button class="menu-tab menu-cat-card ripple-container" data-target="menu-burger">
+                        <div class="cat-card-top">
+                            <div class="cat-card-avatar">🍔</div>
+                        </div>
+                        <div class="cat-card-info">
+                            <span class="cat-card-title">Burgers</span>
+                            <span class="cat-card-count">7 Items</span>
+                        </div>
                     </button>
-                    <button class="menu-tab ripple-container" data-target="menu-chicken">
-                        <span class="tab-icon-wrap">🍗</span><span>Fried Chicken</span>
+                    <button class="menu-tab menu-cat-card ripple-container" data-target="menu-chicken">
+                        <div class="cat-card-top">
+                            <div class="cat-card-avatar">🍗</div>
+                        </div>
+                        <div class="cat-card-info">
+                            <span class="cat-card-title">Fried Chicken</span>
+                            <span class="cat-card-count">6 Items</span>
+                        </div>
                     </button>
-                    <button class="menu-tab ripple-container" data-target="menu-bucket">
-                        <span class="tab-icon-wrap">🪣</span><span>Family Bucket</span>
+                    <button class="menu-tab menu-cat-card ripple-container" data-target="menu-bucket">
+                        <div class="cat-card-top">
+                            <div class="cat-card-avatar">🪣</div>
+                        </div>
+                        <div class="cat-card-info">
+                            <span class="cat-card-title">Family Bucket</span>
+                            <span class="cat-card-count">3 Combos</span>
+                        </div>
                     </button>
-                    <button class="menu-tab ripple-container" data-target="menu-shawarma">
-                        <span class="tab-icon-wrap">🌯</span><span>Shawarma</span>
+                    <button class="menu-tab menu-cat-card ripple-container" data-target="menu-shawarma">
+                        <div class="cat-card-top">
+                            <div class="cat-card-avatar">🌯</div>
+                        </div>
+                        <div class="cat-card-info">
+                            <span class="cat-card-title">Shawarma</span>
+                            <span class="cat-card-count">5 Items</span>
+                        </div>
                     </button>
-                    <button class="menu-tab ripple-container" data-target="menu-pizza">
-                        <span class="tab-icon-wrap">🍕</span><span>Pizza</span>
+                    <button class="menu-tab menu-cat-card ripple-container" data-target="menu-pizza">
+                        <div class="cat-card-top">
+                            <div class="cat-card-avatar">🍕</div>
+                        </div>
+                        <div class="cat-card-info">
+                            <span class="cat-card-title">Pizza</span>
+                            <span class="cat-card-count">8 Items</span>
+                        </div>
                     </button>
-                    <button class="menu-tab ripple-container" data-target="menu-rice">
-                        <span class="tab-icon-wrap">🍚</span><span>Rice &amp; Pasta</span>
+                    <button class="menu-tab menu-cat-card ripple-container" data-target="menu-rice">
+                        <div class="cat-card-top">
+                            <div class="cat-card-avatar">🍚</div>
+                        </div>
+                        <div class="cat-card-info">
+                            <span class="cat-card-title">Rice &amp; Pasta</span>
+                            <span class="cat-card-count">6 Items</span>
+                        </div>
                     </button>
-                    <button class="menu-tab ripple-container" data-target="menu-snacks">
-                        <span class="tab-icon-wrap">🍟</span><span>Snacks</span>
+                    <button class="menu-tab menu-cat-card ripple-container" data-target="menu-snacks">
+                        <div class="cat-card-top">
+                            <div class="cat-card-avatar">🍟</div>
+                        </div>
+                        <div class="cat-card-info">
+                            <span class="cat-card-title">Snacks</span>
+                            <span class="cat-card-count">5 Items</span>
+                        </div>
                     </button>
-                    <button class="menu-tab ripple-container" data-target="menu-drinks">
-                        <span class="tab-icon-wrap">🥤</span><span>Drinks</span>
+                    <button class="menu-tab menu-cat-card ripple-container" data-target="menu-drinks">
+                        <div class="cat-card-top">
+                            <div class="cat-card-avatar">🥤</div>
+                        </div>
+                        <div class="cat-card-info">
+                            <span class="cat-card-title">Drinks</span>
+                            <span class="cat-card-count">4 Items</span>
+                        </div>
                     </button>
                 </div>
             </div>
