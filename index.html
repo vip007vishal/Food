@@ -1075,66 +1075,107 @@
             background: #e63946;
         }
 
-        /* Category Filter Tabs */
+        /* Category Filter Nav Dock */
+        .menu-filter-bar-wrapper {
+            max-width: 1060px;
+            margin: 0 auto 42px;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1.5px solid rgba(247, 147, 30, 0.25);
+            border-radius: 60px;
+            box-shadow: 0 14px 42px rgba(247, 147, 30, 0.14), 0 4px 16px rgba(0, 0, 0, 0.04);
+            position: relative;
+            z-index: 5;
+        }
+
         .menu-filter-bar {
             display: flex;
-            flex-wrap: wrap;
+            align-items: center;
             gap: 10px;
-            justify-content: center;
-            margin-bottom: 36px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding: 4px;
+            border-radius: 50px;
+            justify-content: flex-start;
+        }
+
+        .menu-filter-bar::-webkit-scrollbar {
+            display: none;
+        }
+
+        @media (min-width: 992px) {
+            .menu-filter-bar {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
         }
 
         .menu-tab {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 11px 22px;
+            gap: 10px;
+            padding: 10px 22px;
             border-radius: 50px;
-            border: 2px solid transparent;
-            background: var(--white);
-            color: var(--text-medium);
-            font-weight: 600;
-            font-size: 0.9rem;
+            border: 1.5px solid transparent;
+            background: rgba(247, 147, 30, 0.06);
+            color: var(--text-dark);
+            font-weight: 700;
+            font-size: 0.92rem;
             cursor: pointer;
-            transition: all var(--transition-bounce);
-            box-shadow: var(--shadow-sm);
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
-            overflow: hidden;
+            user-select: none;
         }
 
-        .menu-tab::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, var(--orange-500), var(--red-500));
-            opacity: 0;
-            transition: opacity var(--transition-fast);
-            border-radius: inherit;
-        }
-
-        .menu-tab span,
-        .menu-tab .tab-icon {
-            position: relative;
-            z-index: 1;
-            transition: color var(--transition-fast);
+        .menu-tab .tab-icon-wrap {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            flex-shrink: 0;
         }
 
         .menu-tab:hover {
+            background: var(--orange-100);
+            color: var(--orange-600);
             transform: translateY(-3px);
-            box-shadow: var(--shadow-md);
-            border-color: var(--orange-200);
+            box-shadow: 0 6px 20px rgba(247, 147, 30, 0.22);
+        }
+
+        .menu-tab:hover .tab-icon-wrap {
+            transform: scale(1.12) rotate(-8deg);
+            background: var(--orange-500);
+            color: #ffffff;
         }
 
         .menu-tab.active {
-            background: linear-gradient(135deg, var(--orange-500), var(--red-500));
-            color: #fff;
+            background: linear-gradient(135deg, #FF6B35, #E63946);
+            color: #ffffff;
             border-color: transparent;
-            box-shadow: 0 6px 22px rgba(230, 57, 70, 0.4);
-            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(230, 57, 70, 0.45);
+            transform: translateY(-3px) scale(1.04);
         }
 
-        .menu-tab.active::before {
-            opacity: 0;
+        .menu-tab.active .tab-icon-wrap {
+            background: rgba(255, 255, 255, 0.25);
+            transform: rotate(-12deg) scale(1.18);
+            box-shadow: none;
+        }
+
+        .menu-tab.active span {
+            color: #ffffff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
         }
 
         /* Category Section Block */
@@ -2510,35 +2551,37 @@
                 <button id="menu-search-clear" class="menu-search-clear" title="Clear search">✕</button>
             </div>
 
-            <!-- FILTER TABS -->
-            <div class="menu-filter-bar reveal reveal-delay-1" id="menu-tabs">
-                <button class="menu-tab active ripple-container" data-target="menu-all">
-                    <span class="tab-icon">🍽️</span><span>All Items</span>
-                </button>
-                <button class="menu-tab ripple-container" data-target="menu-burger">
-                    <span class="tab-icon">🍔</span><span>Burgers</span>
-                </button>
-                <button class="menu-tab ripple-container" data-target="menu-chicken">
-                    <span class="tab-icon">🍗</span><span>Fried Chicken</span>
-                </button>
-                <button class="menu-tab ripple-container" data-target="menu-bucket">
-                    <span class="tab-icon">🪣</span><span>Family Bucket</span>
-                </button>
-                <button class="menu-tab ripple-container" data-target="menu-shawarma">
-                    <span class="tab-icon">🌯</span><span>Shawarma</span>
-                </button>
-                <button class="menu-tab ripple-container" data-target="menu-pizza">
-                    <span class="tab-icon">🍕</span><span>Pizza</span>
-                </button>
-                <button class="menu-tab ripple-container" data-target="menu-rice">
-                    <span class="tab-icon">🍚</span><span>Rice &amp; Pasta</span>
-                </button>
-                <button class="menu-tab ripple-container" data-target="menu-snacks">
-                    <span class="tab-icon">🍟</span><span>Snacks</span>
-                </button>
-                <button class="menu-tab ripple-container" data-target="menu-drinks">
-                    <span class="tab-icon">🥤</span><span>Drinks</span>
-                </button>
+            <!-- FILTER TABS NAV DOCK -->
+            <div class="menu-filter-bar-wrapper reveal reveal-delay-1">
+                <div class="menu-filter-bar" id="menu-tabs">
+                    <button class="menu-tab active ripple-container" data-target="menu-all">
+                        <span class="tab-icon-wrap">🍽️</span><span>All Items</span>
+                    </button>
+                    <button class="menu-tab ripple-container" data-target="menu-burger">
+                        <span class="tab-icon-wrap">🍔</span><span>Burgers</span>
+                    </button>
+                    <button class="menu-tab ripple-container" data-target="menu-chicken">
+                        <span class="tab-icon-wrap">🍗</span><span>Fried Chicken</span>
+                    </button>
+                    <button class="menu-tab ripple-container" data-target="menu-bucket">
+                        <span class="tab-icon-wrap">🪣</span><span>Family Bucket</span>
+                    </button>
+                    <button class="menu-tab ripple-container" data-target="menu-shawarma">
+                        <span class="tab-icon-wrap">🌯</span><span>Shawarma</span>
+                    </button>
+                    <button class="menu-tab ripple-container" data-target="menu-pizza">
+                        <span class="tab-icon-wrap">🍕</span><span>Pizza</span>
+                    </button>
+                    <button class="menu-tab ripple-container" data-target="menu-rice">
+                        <span class="tab-icon-wrap">🍚</span><span>Rice &amp; Pasta</span>
+                    </button>
+                    <button class="menu-tab ripple-container" data-target="menu-snacks">
+                        <span class="tab-icon-wrap">🍟</span><span>Snacks</span>
+                    </button>
+                    <button class="menu-tab ripple-container" data-target="menu-drinks">
+                        <span class="tab-icon-wrap">🥤</span><span>Drinks</span>
+                    </button>
+                </div>
             </div>
 
             <!-- ALL ITEMS (Default Visible) -->
