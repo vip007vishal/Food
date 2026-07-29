@@ -372,23 +372,19 @@
     ============================================ */
     function openCart() {
         renderCart();
-        document.getElementById('cart-drawer').classList.add('open');
-        document.getElementById('cart-overlay').classList.add('open');
+        document.getElementById('cart-drawer')?.classList.add('open');
+        document.getElementById('cart-overlay')?.classList.add('open');
         document.body.style.overflow = 'hidden';
     }
     function closeCart() {
-        document.getElementById('cart-drawer').classList.remove('open');
-        document.getElementById('cart-overlay').classList.remove('open');
+        document.getElementById('cart-drawer')?.classList.remove('open');
+        document.getElementById('cart-overlay')?.classList.remove('open');
         document.body.style.overflow = '';
     }
 
     document.getElementById('close-cart-btn')?.addEventListener('click', closeCart);
     document.getElementById('cart-overlay')?.addEventListener('click', closeCart);
-    document.getElementById('nav-cart-btn')?.addEventListener('click', () => {
-        if (!STATE.user) { openLogin('cart'); return; }
-        if (!STATE.address) { openLocationModal(); STATE.pendingFlow = 'cart'; return; }
-        openCart();
-    });
+    document.getElementById('nav-cart-btn')?.addEventListener('click', openCart);
 
     // Cart address display
     function updateCartAddressDisplay() {
@@ -459,7 +455,6 @@
 
     function renderCart() {
         const listEl = document.getElementById('cart-items-list');
-        const emptyEl = document.getElementById('cart-empty-state');
         const billEl = document.getElementById('cart-bill-section');
         const couponEl = document.getElementById('cart-coupon-section');
         const footerEl = document.getElementById('cart-footer');
@@ -470,19 +465,26 @@
 
         updateCartAddressDisplay();
 
+        if (!listEl) return;
+
         if (STATE.cart.length === 0) {
-            listEl.innerHTML = '';
-            emptyEl.style.display = 'flex';
-            billEl.style.display = 'none';
-            couponEl.style.display = 'none';
-            footerEl.style.display = 'none';
+            listEl.innerHTML = `
+                <div class="cart-empty-state" id="cart-empty-state" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:16px;color:var(--text-muted);">
+                    <div class="empty-icon" style="font-size:4rem;">🛒</div>
+                    <h4 style="font-size:1.1rem;font-weight:700;color:var(--text-dark);">Your cart is empty</h4>
+                    <p style="font-size:0.85rem;text-align:center;">Add delicious items from our menu to get started!</p>
+                    <button class="btn-browse" id="browse-menu-btn" onclick="window.CDOrder.closeCart(); document.getElementById('menu')?.scrollIntoView({ behavior: 'smooth' });">Browse Menu</button>
+                </div>
+            `;
+            if (billEl) billEl.style.display = 'none';
+            if (couponEl) couponEl.style.display = 'none';
+            if (footerEl) footerEl.style.display = 'none';
             return;
         }
 
-        emptyEl.style.display = 'none';
-        billEl.style.display = 'block';
-        couponEl.style.display = 'block';
-        footerEl.style.display = 'block';
+        if (billEl) billEl.style.display = 'block';
+        if (couponEl) couponEl.style.display = 'block';
+        if (footerEl) footerEl.style.display = 'block';
 
         listEl.innerHTML = STATE.cart.map(item => `
             <div class="cart-item" data-id="${item.id}">
@@ -504,16 +506,24 @@
 
         // Bill
         const { subtotal, discount, deliveryFee, total } = getCartTotals();
-        document.getElementById('bill-subtotal').textContent = formatINR(subtotal);
-        document.getElementById('bill-delivery').textContent = formatINR(deliveryFee);
-        document.getElementById('bill-discount-row').style.display = discount > 0 ? 'flex' : 'none';
-        document.getElementById('bill-discount').textContent = '−' + formatINR(discount);
-        document.getElementById('bill-total').textContent = formatINR(total);
-        document.getElementById('checkout-total-display').textContent = formatINR(total);
+        const subtotalEl = document.getElementById('bill-subtotal');
+        const deliveryEl = document.getElementById('bill-delivery');
+        const discountRow = document.getElementById('bill-discount-row');
+        const discountEl = document.getElementById('bill-discount');
+        const totalEl = document.getElementById('bill-total');
+        const checkoutTotalEl = document.getElementById('checkout-total-display');
+
+        if (subtotalEl) subtotalEl.textContent = formatINR(subtotal);
+        if (deliveryEl) deliveryEl.textContent = formatINR(deliveryFee);
+        if (discountRow) discountRow.style.display = discount > 0 ? 'flex' : 'none';
+        if (discountEl) discountEl.textContent = '−' + formatINR(discount);
+        if (totalEl) totalEl.textContent = formatINR(total);
+        if (checkoutTotalEl) checkoutTotalEl.textContent = formatINR(total);
 
         // Coupon input current value
-        if (STATE.coupon) {
-            document.getElementById('coupon-input').value = STATE.coupon;
+        const couponInput = document.getElementById('coupon-input');
+        if (STATE.coupon && couponInput) {
+            couponInput.value = STATE.coupon;
             showCouponResult(true, '✅ Coupon ' + STATE.coupon + ' applied!');
         }
     }
@@ -538,7 +548,7 @@
     }
 
     document.getElementById('apply-coupon-btn')?.addEventListener('click', () => {
-        const code = document.getElementById('coupon-input').value.trim();
+        const code = document.getElementById('coupon-input')?.value.trim();
         if (!code) { showCouponResult(false, 'Enter a coupon code'); return; }
         const ok = applyCoupon(code);
         if (ok) showToast('Coupon applied!', '🏷️');
@@ -546,7 +556,16 @@
 
     document.getElementById('btn-checkout')?.addEventListener('click', () => {
         if (STATE.cart.length === 0) { showToast('Your cart is empty', '🛒'); return; }
-        if (!STATE.address) { showToast('Please add delivery address', '📍'); closeCart(); setTimeout(() => openLocationModal(), 300); return; }
+        if (!STATE.user) {
+            closeCart();
+            setTimeout(() => openLogin('checkout'), 300);
+            return;
+        }
+        if (!STATE.address) {
+            closeCart();
+            setTimeout(() => openLocationModal(), 300);
+            return;
+        }
         closeCart();
         setTimeout(() => openPaymentModal(), 350);
     });
@@ -556,8 +575,6 @@
         const btn = e.target.closest('.add-to-cart-btn');
         if (!btn) return;
         e.preventDefault();
-        if (!STATE.user) { openLogin('cart'); return; }
-        if (!STATE.address) { openLocationModal(); STATE.pendingFlow = 'cart'; return; }
         const id = btn.dataset.id;
         const name = btn.dataset.name;
         const price = parseInt(btn.dataset.price);
@@ -597,10 +614,8 @@
         btn.classList.add('cart-bump');
     }
 
-    document.getElementById('floating-cart-btn')?.addEventListener('click', () => {
-        if (!STATE.user) { openLogin('cart'); return; }
-        openCart();
-    });
+    document.getElementById('floating-cart-btn')?.addEventListener('click', openCart);
+
 
     /* ============================================
        PAYMENT MODAL (COD ONLY)
