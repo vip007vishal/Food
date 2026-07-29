@@ -12,6 +12,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="order.css">
     <style>
         :root {
             --orange-50: #FFF8F0;
@@ -2499,10 +2500,14 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#menu">Menu</a></li>
+                <li><a href="#offers">Offers</a></li>
                 <li><a href="#reviews">Reviews</a></li>
                 <li><a href="#timing">Timings</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="tel:+919876543210" class="nav-cta">📞 Call Now</a></li>
+                <li><button class="nav-login-btn" id="nav-login-btn">👤 Login</button></li>
+                <li><div class="nav-user-pill" id="nav-user-pill" style="display:none;"><div class="nav-user-avatar">👤</div><span id="nav-user-phone"></span></div></li>
+                <li><button class="nav-cart-btn" id="nav-cart-btn">🛒 Cart <span class="nav-cart-count">0</span></button></li>
             </ul>
         </div>
     </header>
@@ -2545,6 +2550,10 @@
                     <div class="stat-value">7 Days</div>
                     <div class="stat-label">Open Weekly</div>
                 </div>
+            </div>
+            <div class="hero-order-cta" style="margin-top:28px;display:flex;gap:16px;flex-wrap:wrap;justify-content:center;">
+                <button class="btn-order-now" id="hero-order-now-btn" style="font-size:1.05rem;padding:16px 40px;">🛵 Order Online</button>
+                <a href="#menu" class="btn-order-now" style="background:rgba(255,255,255,0.12);backdrop-filter:blur(8px);border:1.5px solid rgba(255,255,255,0.25);text-decoration:none;font-size:1.05rem;padding:16px 32px;">📋 View Menu</a>
             </div>
             <div class="scroll-indicator">↓</div>
         </div>
@@ -2653,6 +2662,116 @@
                 <div class="gallery-item reveal reveal-delay-4">
                     <img src="desert.jpg" alt="Desserts &amp; Ice Cream" loading="lazy" decoding="async">
                     <div class="overlay">Desserts &amp; Ice Cream</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================
+         OFFERS & DELIVERY SECTION
+    ========================================= -->
+    <section class="section offers-section" id="offers">
+        <div class="container">
+            <!-- Section Header -->
+            <div class="section-header reveal">
+                <span class="section-tag">Hot Deals</span>
+                <h2>Offers &amp; Coupons</h2>
+                <p>Save big on your favourite Chicken Dinner meals</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <!-- Offer Banner Slider -->
+            <div class="offers-banner-slider reveal">
+                <div class="offer-slide offer-slide-1 active">
+                    <div class="offer-slide-emoji">🍗</div>
+                    <div class="offer-slide-text">
+                        <h3>Welcome Offer — 20% Off!</h3>
+                        <p>New to Chicken Dinner? Your first order gets 20% off automatically</p>
+                        <span class="offer-slide-badge">Use: WELCOME20</span>
+                    </div>
+                </div>
+                <div class="offer-slide offer-slide-2">
+                    <div class="offer-slide-emoji">🍔</div>
+                    <div class="offer-slide-text">
+                        <h3>Flat ₹50 Off on orders ₹250+</h3>
+                        <p>Use coupon at checkout. Valid today only!</p>
+                        <span class="offer-slide-badge">Use: FIRST50</span>
+                    </div>
+                </div>
+                <div class="offer-slide offer-slide-3">
+                    <div class="offer-slide-emoji">🚚</div>
+                    <div class="offer-slide-text">
+                        <h3>Free Delivery on Any Order!</h3>
+                        <p>No minimum order. Door-to-door delivery at zero cost</p>
+                        <span class="offer-slide-badge">Use: FREESHIP</span>
+                    </div>
+                </div>
+                <div class="offer-slide offer-slide-4">
+                    <div class="offer-slide-emoji">🌯</div>
+                    <div class="offer-slide-text">
+                        <h3>Dinner Special — 15% Off!</h3>
+                        <p>Order after 6 PM and enjoy 15% off on all items</p>
+                        <span class="offer-slide-badge">Use: DINNER15</span>
+                    </div>
+                </div>
+                <div class="offer-slide-dots">
+                    <button class="offer-dot active" data-idx="0"></button>
+                    <button class="offer-dot" data-idx="1"></button>
+                    <button class="offer-dot" data-idx="2"></button>
+                    <button class="offer-dot" data-idx="3"></button>
+                </div>
+            </div>
+
+            <!-- Coupon Cards -->
+            <div class="offers-cards-grid reveal">
+                <div class="offer-coupon-card">
+                    <span class="coupon-icon">🎉</span>
+                    <div class="coupon-code">WELCOME20</div>
+                    <div class="coupon-title">Welcome Discount</div>
+                    <div class="coupon-desc">20% off your first order. No minimum.</div>
+                    <button class="coupon-apply-btn" data-code="WELCOME20">Apply Coupon</button>
+                </div>
+                <div class="offer-coupon-card">
+                    <span class="coupon-icon">💰</span>
+                    <div class="coupon-code">FIRST50</div>
+                    <div class="coupon-title">Flat ₹50 Off</div>
+                    <div class="coupon-desc">₹50 flat off on orders above ₹250.</div>
+                    <button class="coupon-apply-btn" data-code="FIRST50">Apply Coupon</button>
+                </div>
+                <div class="offer-coupon-card">
+                    <span class="coupon-icon">🚚</span>
+                    <div class="coupon-code">FREESHIP</div>
+                    <div class="coupon-title">Free Delivery</div>
+                    <div class="coupon-desc">Zero delivery charges on your order.</div>
+                    <button class="coupon-apply-btn" data-code="FREESHIP">Apply Coupon</button>
+                </div>
+                <div class="offer-coupon-card">
+                    <span class="coupon-icon">🌙</span>
+                    <div class="coupon-code">DINNER15</div>
+                    <div class="coupon-title">Dinner Special</div>
+                    <div class="coupon-desc">15% off on all items. Min. order ₹150.</div>
+                    <button class="coupon-apply-btn" data-code="DINNER15">Apply Coupon</button>
+                </div>
+            </div>
+
+            <!-- Home Delivery CTA Strip -->
+            <div class="delivery-cta-strip reveal" style="margin-top:48px;">
+                <div class="delivery-strip-left">
+                    <h3>🏠 Home Delivery Now Live!</h3>
+                    <p>Fresh, hot food delivered right to your door — no waiting, no fuss.</p>
+                    <div class="delivery-strip-badges">
+                        <span class="delivery-badge">🔥 Live Tracking</span>
+                        <span class="delivery-badge">🧾 No Hidden Fees</span>
+                        <span class="delivery-badge">📱 OTP Secured</span>
+                        <span class="delivery-badge">💳 Pay on Delivery</span>
+                    </div>
+                </div>
+                <div class="delivery-strip-right">
+                    <div class="delivery-time-badge">
+                        <div class="time-num">35–45</div>
+                        <div class="time-label">Min Delivery</div>
+                    </div>
+                    <button class="btn-order-now" id="delivery-cta-btn" onclick="window.CDOrder && window.CDOrder.openLogin ? (document.getElementById('hero-order-now-btn') && document.getElementById('hero-order-now-btn').click()) : void 0">🛵 Order Now</button>
                 </div>
             </div>
         </div>
@@ -4294,6 +4413,226 @@
 
         })();
     </script>
+
+    <!-- ===== TOAST CONTAINER ===== -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- ===== FLOATING CART BUTTON ===== -->
+    <button class="floating-cart-btn" id="floating-cart-btn">
+        🛒 <span id="floating-cart-text">Cart</span>
+        <span class="cart-count-badge">0</span>
+    </button>
+
+    <!-- ===== CART DRAWER OVERLAY ===== -->
+    <div class="cart-drawer-overlay" id="cart-overlay"></div>
+
+    <!-- ===== CART DRAWER ===== -->
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-header">
+            <h3>🛒 Your Cart <span class="cart-item-count-pill" id="cart-count-pill">0</span></h3>
+            <button class="modal-close" id="close-cart-btn">✕</button>
+        </div>
+        <div class="cart-delivery-addr" id="cart-delivery-addr">
+            <span class="addr-icon">📍</span>
+            <span id="cart-address-display">Add delivery address</span>
+            <span class="change-btn" id="cart-change-addr-btn">Change</span>
+        </div>
+        <div class="cart-items-list" id="cart-items-list">
+            <div class="cart-empty-state" id="cart-empty-state" style="display:flex;">
+                <div class="empty-icon">🛒</div>
+                <h4>Your cart is empty</h4>
+                <p>Add delicious items from our menu to get started!</p>
+                <button class="btn-browse" id="browse-menu-btn">Browse Menu</button>
+            </div>
+        </div>
+        <div class="cart-coupon-section" id="cart-coupon-section" style="display:none;">
+            <div class="coupon-input-row">
+                <input class="coupon-input" id="coupon-input" placeholder="Enter coupon code" maxlength="12">
+                <button class="btn-apply-coupon" id="apply-coupon-btn">Apply</button>
+            </div>
+            <div class="coupon-result" id="coupon-result"></div>
+        </div>
+        <div class="cart-bill" id="cart-bill-section" style="display:none;">
+            <div class="cart-bill-row"><span>Subtotal</span><span id="bill-subtotal">₹0</span></div>
+            <div class="cart-bill-row" id="bill-discount-row" style="display:none;"><span>Discount</span><span class="discount-val" id="bill-discount">−₹0</span></div>
+            <div class="cart-bill-row"><span>Delivery Fee</span><span id="bill-delivery">₹40</span></div>
+            <div class="cart-bill-row total"><span>Total</span><span id="bill-total">₹0</span></div>
+        </div>
+        <div class="cart-checkout-footer" id="cart-footer" style="display:none;">
+            <button class="btn-checkout" id="btn-checkout">
+                <span>Proceed to Checkout</span>
+                <span class="checkout-total" id="checkout-total-display">₹0</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== LOGIN / OTP MODAL ===== -->
+    <div class="order-overlay" id="login-overlay">
+        <div class="login-modal">
+            <button class="modal-close" id="close-login-btn">✕</button>
+            <div class="login-logo">🍗</div>
+            <div class="login-title">Login to Order</div>
+            <div class="login-sub">Enter your mobile number to continue</div>
+
+            <!-- Phone Step -->
+            <div id="phone-step" class="phone-step">
+                <div class="phone-input-group">
+                    <div class="phone-country-code">🇮🇳 +91</div>
+                    <input class="phone-input" id="phone-input" type="tel" maxlength="10" placeholder="98765 43210">
+                </div>
+                <button class="btn-send-otp" id="send-otp-btn">Send OTP</button>
+                <div class="login-social-divider">Secure &amp; Private Login</div>
+                <p style="font-size:0.78rem;color:var(--text-muted);text-align:center;">By continuing, you agree to receive an OTP on your mobile number.</p>
+            </div>
+
+            <!-- OTP Step -->
+            <div id="otp-step" class="otp-step">
+                <div class="otp-sent-info">
+                    📱 OTP sent to +91 <strong id="otp-phone-display"></strong>
+                    <span id="otp-demo-hint" style="color:var(--orange-600);font-weight:700;"></span>
+                </div>
+                <div class="otp-boxes">
+                    <input class="otp-box" type="tel" maxlength="1" inputmode="numeric">
+                    <input class="otp-box" type="tel" maxlength="1" inputmode="numeric">
+                    <input class="otp-box" type="tel" maxlength="1" inputmode="numeric">
+                    <input class="otp-box" type="tel" maxlength="1" inputmode="numeric">
+                    <input class="otp-box" type="tel" maxlength="1" inputmode="numeric">
+                    <input class="otp-box" type="tel" maxlength="1" inputmode="numeric">
+                </div>
+                <div class="otp-timer">
+                    <span id="otp-countdown">Resend in 30s</span>
+                    <button class="resend-link" id="resend-otp-btn" style="display:none;">Resend OTP</button>
+                </div>
+                <button class="btn-verify-otp" id="verify-otp-btn">Verify &amp; Proceed →</button>
+                <button class="btn-back-phone" id="back-to-phone-btn">← Change Number</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== LOCATION MODAL ===== -->
+    <div class="order-overlay" id="location-overlay">
+        <div class="location-modal">
+            <button class="modal-close" id="close-location-btn">✕</button>
+            <h3>📍 Delivery Address</h3>
+            <p>Where should we deliver your delicious food?</p>
+
+            <div class="location-map-placeholder" id="location-map-placeholder">
+                <div class="map-icon">🗺️</div>
+                <p>Tap to use current location</p>
+            </div>
+
+            <button class="use-gps-btn" id="use-gps-btn">📍 Use My Current Location</button>
+
+            <div class="address-type-tabs">
+                <button class="addr-tab active" data-type="home">🏠 Home</button>
+                <button class="addr-tab" data-type="work">💼 Work</button>
+                <button class="addr-tab" data-type="other">📌 Other</button>
+            </div>
+
+            <div class="location-form">
+                <input class="loc-input" id="loc-street" placeholder="House / Flat / Street *" required>
+                <input class="loc-input" id="loc-area" placeholder="Area / Colony / Locality *" required>
+                <div class="loc-input-row">
+                    <input class="loc-input" id="loc-pincode" placeholder="Pincode *" maxlength="6" type="tel" required>
+                    <input class="loc-input" id="loc-landmark" placeholder="Landmark (optional)">
+                </div>
+                <button class="btn-save-location" id="save-location-btn">💾 Save &amp; Continue →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PAYMENT MODAL ===== -->
+    <div class="order-overlay" id="payment-overlay">
+        <div class="payment-modal">
+            <button class="modal-close" id="close-payment-btn">✕</button>
+            <h3>💳 Choose Payment</h3>
+
+            <div class="payment-options">
+                <div class="payment-option selected" data-method="cod">
+                    <div class="payment-option-icon">💵</div>
+                    <div class="payment-option-text">
+                        <h4>Cash on Delivery</h4>
+                        <p>Pay when your food arrives</p>
+                    </div>
+                    <div class="payment-option-radio"></div>
+                </div>
+                <div class="payment-option" data-method="upi">
+                    <div class="payment-option-icon">📱</div>
+                    <div class="payment-option-text">
+                        <h4>UPI / PhonePe / GPay</h4>
+                        <p>Pay instantly with any UPI app</p>
+                    </div>
+                    <div class="payment-option-radio"></div>
+                </div>
+                <div class="payment-option" data-method="card">
+                    <div class="payment-option-icon">💳</div>
+                    <div class="payment-option-text">
+                        <h4>Credit / Debit Card</h4>
+                        <p>Visa, Mastercard, RuPay accepted</p>
+                    </div>
+                    <div class="payment-option-radio"></div>
+                </div>
+            </div>
+
+            <div class="payment-order-summary">
+                <h4>Order Summary</h4>
+                <div class="payment-order-row"><span>Subtotal</span><span id="pay-subtotal">₹0</span></div>
+                <div class="payment-order-row" id="pay-discount-row" style="display:none;"><span>Discount</span><span id="pay-discount" style="color:#15803d;font-weight:700;">−₹0</span></div>
+                <div class="payment-order-row"><span>Delivery</span><span id="pay-delivery">₹40</span></div>
+                <div class="payment-order-row grand-total"><span>Grand Total</span><span id="pay-total">₹0</span></div>
+            </div>
+
+            <button class="btn-place-order" id="place-order-btn">🛵 Place Order</button>
+            <div class="payment-note">🔒 Your order is safe &amp; secure</div>
+        </div>
+    </div>
+
+    <!-- ===== ORDER CONFIRMATION OVERLAY ===== -->
+    <div class="confirmation-overlay" id="confirmation-overlay">
+        <div class="confirmation-content">
+            <div class="confirm-animation">✅</div>
+            <div class="confirm-title">Order Placed! 🎉</div>
+            <div class="confirm-subtitle">Your food is being prepared with love and care.</div>
+
+            <div class="confirm-order-id">
+                <div class="label">Order ID</div>
+                <div class="id" id="confirm-order-id">CD000000</div>
+            </div>
+
+            <div class="confirm-eta-card">
+                <div class="eta-icon">🛵</div>
+                <div class="eta-text">
+                    <h4>Estimated Delivery</h4>
+                    <p>Your food will arrive hot and fresh!</p>
+                </div>
+                <div class="eta-time">
+                    <div class="minutes">35–45</div>
+                    <div class="min-label">Minutes</div>
+                </div>
+            </div>
+
+            <div class="order-tracking">
+                <h4>📦 Live Order Tracking</h4>
+                <div class="tracking-steps" id="tracking-steps-list"></div>
+            </div>
+
+            <div class="confirm-delivery-info">
+                <div class="delivery-agent-icon">🧑‍🦱</div>
+                <div class="delivery-agent-text">
+                    <h4>Your Delivery Partner</h4>
+                    <p>Assigned: <span class="agent-name" id="confirm-agent-name">Ramesh K.</span></p>
+                    <button class="btn-call-agent">📞 Call Partner</button>
+                </div>
+            </div>
+
+            <div class="confirm-actions">
+                <button class="btn-back-home" id="close-confirmation-btn">← Back to Home</button>
+                <button class="btn-order-again" id="order-again-btn">🍗 Order Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="order.js"></script>
 </body>
 
 </html>
