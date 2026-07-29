@@ -1131,11 +1131,15 @@
     gap: 6px;
 }
 
-/* ===== CONFIRMATION / SUCCESS SCREEN ===== */
+/* ===== CONFIRMATION / SUCCESS SCREEN (SINGLE SCROLLBAR FIX) ===== */
+body.order-confirmed-active {
+    overflow: hidden !important;
+}
+
 .confirmation-overlay {
     position: fixed;
     inset: 0;
-    background: linear-gradient(135deg, #fff8f0, #fff5f4);
+    background: linear-gradient(135deg, #fff8f0 0%, #fff5f4 50%, #fff0e6 100%);
     z-index: 10002;
     display: flex;
     flex-direction: column;
@@ -1145,6 +1149,8 @@
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.4s ease;
+    scrollbar-width: thin;
+    scrollbar-color: var(--orange-300) transparent;
 }
 .confirmation-overlay.open {
     opacity: 1;

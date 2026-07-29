@@ -835,8 +835,7 @@ Please accept & start preparing this order! 🙏`;
         }
 
         overlay.classList.add('open');
-        document.body.style.overflow = 'auto';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        document.body.classList.add('order-confirmed-active');
 
         // Reset and animate tracking steps
         const stepsEl = document.getElementById('tracking-steps-list');
@@ -874,12 +873,14 @@ Please accept & start preparing this order! 🙏`;
 
     document.getElementById('close-confirmation-btn')?.addEventListener('click', () => {
         document.getElementById('confirmation-overlay').classList.remove('open');
+        document.body.classList.remove('order-confirmed-active');
         document.body.style.overflow = '';
         showToast('Thank you for ordering! 🙏', '🍗');
     });
 
     document.getElementById('order-again-btn')?.addEventListener('click', () => {
         document.getElementById('confirmation-overlay').classList.remove('open');
+        document.body.classList.remove('order-confirmed-active');
         document.body.style.overflow = '';
         document.getElementById('menu')?.scrollIntoView({ behavior: 'smooth' });
     });
