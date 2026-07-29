@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chicken Location - Madurai | Fresh Grill &amp; Fried Chicken</title>
+    <title>Chicken Dinner - Madurai | Fresh Grill &amp; Fried Chicken</title>
     <meta name="description"
-        content="Chicken Location Madurai – Freshly grilled chicken, crispy fried chicken, burgers, shawarma, pizza &amp; more. Rated 4.8★ on Google. Visit us at Hayathkhan Sahib Street, Periyar, Madurai.">
+        content="Chicken Dinner Madurai – Freshly grilled chicken, crispy fried chicken, burgers, shawarma, pizza &amp; more. Rated 4.8★ on Google. Visit us at 123 Main Food Street, Commercial Hub, Madurai.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -68,6 +68,36 @@
             scroll-padding-top: var(--header-height);
             overflow-x: hidden !important;
             max-width: 100vw;
+            /* Firefox Scrollbar Styling */
+            scrollbar-width: thin;
+            scrollbar-color: var(--orange-500) var(--orange-50);
+        }
+
+        /* WebKit Scrollbar Styling (Chrome, Edge, Safari, Opera, Brave) */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--orange-50);
+            border-left: 1px solid rgba(247, 147, 30, 0.12);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--orange-500), var(--red-500));
+            border-radius: 20px;
+            border: 2px solid var(--orange-50);
+            box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.15);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--orange-600), var(--red-600));
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        }
+
+        ::-webkit-scrollbar-corner {
+            background: var(--orange-50);
         }
 
         body {
@@ -913,6 +943,19 @@
             transition: transform var(--transition-slow);
         }
 
+        .about-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: inherit;
+            transition: transform var(--transition-smooth);
+        }
+
+        .about-image-wrapper:hover img {
+            transform: scale(1.05);
+        }
+
         .about-image-wrapper:hover {
             transform: scale(1.03) rotate(1deg);
         }
@@ -944,6 +987,21 @@
             font-size: 3rem;
         }
 
+        .gallery-item img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform var(--transition-smooth);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+
         .gallery-item:hover {
             transform: translateY(-8px) scale(1.04);
             box-shadow: var(--shadow-xl);
@@ -962,6 +1020,7 @@
             color: #fff;
             font-weight: 600;
             font-size: 0.85rem;
+            z-index: 1;
         }
 
         .gallery-item:hover .overlay {
@@ -1083,27 +1142,20 @@
         =============================================== */
         .menu-filter-bar-wrapper {
             max-width: 1140px;
-            margin: 0 auto 44px;
-            padding: 12px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(253, 242, 233, 0.8));
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 2px solid rgba(247, 147, 30, 0.2);
-            border-radius: 24px;
-            box-shadow: 0 16px 48px rgba(247, 147, 30, 0.12), 0 4px 16px rgba(0, 0, 0, 0.04);
+            margin: 0 auto 36px;
+            padding: 0;
+            background: transparent;
+            border: none;
+            box-shadow: none;
             position: relative;
             z-index: 5;
         }
 
         .menu-filter-bar {
             display: grid;
-            grid-template-columns: repeat(9, minmax(105px, 1fr));
-            gap: 12px;
-            overflow-x: auto;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-            padding: 4px 2px;
-            scroll-snap-type: x mandatory;
+            grid-template-columns: repeat(9, 1fr);
+            gap: 8px;
+            padding: 12px 4px;
         }
 
         .menu-filter-bar::-webkit-scrollbar {
@@ -1115,95 +1167,100 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 16px 8px 14px;
-            border-radius: 18px;
+            padding: 12px 4px 10px;
+            border-radius: 16px;
             border: 1.5px solid rgba(247, 147, 30, 0.14);
             background: #ffffff;
             color: var(--text-dark);
             cursor: pointer;
             text-align: center;
-            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
             user-select: none;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
             scroll-snap-align: start;
+            width: 100%;
+            height: 145px;
         }
 
         .cat-card-top {
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             position: relative;
         }
 
         .cat-card-avatar {
-            width: 52px;
-            height: 52px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             background: linear-gradient(135deg, #FFF5EC, #FDE8E5);
             border: 2px solid rgba(247, 147, 30, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6rem;
-            transition: all 0.35s ease;
-            box-shadow: 0 4px 12px rgba(247, 147, 30, 0.15);
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(247, 147, 30, 0.12);
         }
 
         .cat-card-info {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 2px;
+            gap: 1px;
+            width: 100%;
         }
 
         .cat-card-title {
-            font-size: 0.88rem;
+            font-size: 0.8rem;
             font-weight: 700;
             color: var(--text-dark);
             line-height: 1.2;
+            white-space: nowrap;
             transition: color 0.3s ease;
         }
 
         .cat-card-count {
-            font-size: 0.73rem;
+            font-size: 0.68rem;
             font-weight: 600;
             color: var(--text-muted);
+            white-space: nowrap;
             transition: color 0.3s ease;
         }
 
         /* Hover State */
         .menu-cat-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             border-color: var(--orange-400);
-            box-shadow: 0 10px 24px rgba(247, 147, 30, 0.25);
+            box-shadow: 0 6px 16px rgba(247, 147, 30, 0.18);
             background: #FFFDFB;
         }
 
         .menu-cat-card:hover .cat-card-avatar {
-            transform: scale(1.12) rotate(-8deg);
+            transform: scale(1.1) rotate(-6deg);
             background: linear-gradient(135deg, #FF6B35, #E63946);
             color: #ffffff;
             border-color: transparent;
-            box-shadow: 0 6px 18px rgba(230, 57, 70, 0.4);
+            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
         }
 
         /* Active State */
         .menu-cat-card.active {
             background: linear-gradient(145deg, #1C0D05, #2D1409);
             border-color: #FF6B35;
-            box-shadow: 0 12px 30px rgba(28, 13, 5, 0.35), 0 0 16px rgba(255, 107, 53, 0.3);
-            transform: translateY(-4px);
+            box-shadow: 0 4px 14px rgba(28, 13, 5, 0.2);
+            transform: translateY(-3px);
         }
 
         .menu-cat-card.active .cat-card-avatar {
             background: linear-gradient(135deg, #FF6B35, #E63946);
             border-color: rgba(255, 255, 255, 0.3);
-            transform: scale(1.15) rotate(-6deg);
-            box-shadow: 0 6px 20px rgba(230, 57, 70, 0.5);
+            transform: scale(1.08) rotate(-4deg);
+            box-shadow: 0 3px 10px rgba(230, 57, 70, 0.35);
         }
 
         .menu-cat-card.active .cat-card-title {
             color: #ffffff;
-            font-weight: 800;
+            font-weight: 700;
         }
 
         .menu-cat-card.active .cat-card-count {
@@ -1222,13 +1279,19 @@
             border-radius: 0 0 4px 4px;
         }
 
-        @media (max-width: 1100px) {
+        @media (max-width: 992px) {
             .menu-filter-bar {
                 display: flex;
                 flex-wrap: nowrap;
+                overflow-x: auto;
+                scrollbar-width: none;
+                gap: 10px;
+                padding: 12px 6px;
             }
+
             .menu-cat-card {
-                min-width: 105px;
+                min-width: 100px;
+                flex-shrink: 0;
             }
         }
 
@@ -2427,7 +2490,7 @@
         <div class="header-inner">
             <a href="#" class="logo-group">
                 <div class="logo-icon">🍗</div>
-                <div class="logo-text">Chicken Location<span>Madurai</span></div>
+                <div class="logo-text">Chicken Dinner<span>Madurai</span></div>
             </a>
             <button class="nav-toggle" aria-label="Toggle menu" id="nav-toggle">
                 <span></span><span></span><span></span>
@@ -2439,7 +2502,7 @@
                 <li><a href="#reviews">Reviews</a></li>
                 <li><a href="#timing">Timings</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="tel:+919597961293" class="nav-cta">📞 Call Now</a></li>
+                <li><a href="tel:+919876543210" class="nav-cta">📞 Call Now</a></li>
             </ul>
         </div>
     </header>
@@ -2463,8 +2526,7 @@
             <h1>Fresh <span class="highlight">Chicken</span>,<br>Grilled to <span class="highlight">Perfection</span>
             </h1>
             <p class="hero-subtitle">
-                Shop, Periya Rose Milk, No: 5, Hayathkhan Sahib Street, Near 24 Hours Bus Stand,
-                Periyar, Madurai Main, Madurai, Tamil Nadu - 625001
+                123 Main Food Street, Commercial Hub, Near Central Station, Madurai, Tamil Nadu - 625001
             </p>
             <div class="hero-stats">
                 <div class="hero-stat">
@@ -2498,7 +2560,7 @@
         <div class="container">
             <div class="section-header reveal">
                 <span class="section-tag">Our Story</span>
-                <h2>About Chicken Location</h2>
+                <h2>About Chicken Dinner</h2>
                 <p>Where flavor meets freshness in the heart of Madurai</p>
                 <div class="section-divider"></div>
             </div>
@@ -2506,7 +2568,7 @@
                 <div class="about-text reveal-left">
                     <h3>A Passion for Perfect Chicken</h3>
                     <p>
-                        Chicken Location is one of the most popular chicken restaurants in Madurai,
+                        Chicken Dinner is one of the most popular chicken restaurants in Madurai,
                         celebrated for its fresh grilled chicken, mouthwatering meals, and warm,
                         family-friendly atmosphere. Every dish is crafted with care using quality
                         ingredients and time-honored recipes.
@@ -2544,7 +2606,7 @@
                     </div>
                 </div>
                 <div class="about-image-wrapper reveal-right">
-                    <span class="placeholder-emoji">🍗🔥</span>
+                    <img src="restaurant.jpg" alt="Restaurant Interior" loading="lazy" decoding="async">
                 </div>
             </div>
         </div>
@@ -2560,21 +2622,37 @@
                 <div class="section-divider"></div>
             </div>
             <div class="gallery-grid">
-                <div class="gallery-item reveal reveal-delay-1">🍗📸<div class="overlay">Fresh Grilled Chicken</div>
+                <div class="gallery-item reveal reveal-delay-1">
+                    <img src="grill.jpg" alt="Fresh Grilled Chicken" loading="lazy" decoding="async">
+                    <div class="overlay">Fresh Grilled Chicken</div>
                 </div>
-                <div class="gallery-item reveal reveal-delay-1">🍔✨<div class="overlay">Signature Burgers</div>
+                <div class="gallery-item reveal reveal-delay-1">
+                    <img src="burger.jpg" alt="Signature Burgers" loading="lazy" decoding="async">
+                    <div class="overlay">Signature Burgers</div>
                 </div>
-                <div class="gallery-item reveal reveal-delay-2">🌯🔥<div class="overlay">Hot Shawarma</div>
+                <div class="gallery-item reveal reveal-delay-2">
+                    <img src="shawarma.jpg" alt="Hot Shawarma" loading="lazy" decoding="async">
+                    <div class="overlay">Hot Shawarma</div>
                 </div>
-                <div class="gallery-item reveal reveal-delay-2">🍕🧀<div class="overlay">Wood-fired Pizza</div>
+                <div class="gallery-item reveal reveal-delay-2">
+                    <img src="pizzas.jpg" alt="Wood-fired Pizza" loading="lazy" decoding="async">
+                    <div class="overlay">Wood-fired Pizza</div>
                 </div>
-                <div class="gallery-item reveal reveal-delay-3">🍟😋<div class="overlay">Loaded Fries</div>
+                <div class="gallery-item reveal reveal-delay-3">
+                    <img src="fries.jpg" alt="Loaded Fries" loading="lazy" decoding="async">
+                    <div class="overlay">Loaded Fries</div>
                 </div>
-                <div class="gallery-item reveal reveal-delay-3">🥤🍹<div class="overlay">Refreshing Mojitos</div>
+                <div class="gallery-item reveal reveal-delay-3">
+                    <img src="mojito.jpg" alt="Refreshing Mojitos" loading="lazy" decoding="async">
+                    <div class="overlay">Refreshing Mojitos</div>
                 </div>
-                <div class="gallery-item reveal reveal-delay-4">🍝❤️<div class="overlay">Creamy Pasta</div>
+                <div class="gallery-item reveal reveal-delay-4">
+                    <img src="pasta.jpg" alt="Creamy Pasta" loading="lazy" decoding="async">
+                    <div class="overlay">Creamy Pasta</div>
                 </div>
-                <div class="gallery-item reveal reveal-delay-4">🍨🍦<div class="overlay">Desserts &amp; Ice Cream</div>
+                <div class="gallery-item reveal reveal-delay-4">
+                    <img src="desert.jpg" alt="Desserts &amp; Ice Cream" loading="lazy" decoding="async">
+                    <div class="overlay">Desserts &amp; Ice Cream</div>
                 </div>
             </div>
         </div>
@@ -3063,7 +3141,7 @@
                                 <div class="menu-item-left">
                                     <span class="diet-badge diet-badge--nonveg" title="Non-Veg"><span
                                             class="diet-dot"></span></span>
-                                    <span class="menu-item-name">Chicken Location Special Rice <span
+                                    <span class="menu-item-name">Chicken Dinner Special Rice <span
                                             class="badge-popular">⭐ Special</span></span>
                                 </div>
                                 <div class="menu-item-right">
@@ -3591,7 +3669,7 @@
                             </li>
                             <li class="menu-item">
                                 <div class="menu-item-left"><span class="diet-badge diet-badge--nonveg"><span
-                                            class="diet-dot"></span></span><span class="menu-item-name">Chicken Location
+                                            class="diet-dot"></span></span><span class="menu-item-name">Chicken Dinner
                                         Special Rice <span class="badge-popular">⭐ Special</span></span></div>
                                 <div class="menu-item-right"><span class="menu-item-price">₹130</span><button
                                         class="fav-btn">❤️</button></div>
@@ -3862,20 +3940,20 @@
             <div class="contact-grid">
                 <div class="contact-info-card reveal-left">
                     <div>
-                        <h3>📍 Visit Chicken Location</h3>
+                        <h3>📍 Visit Chicken Dinner</h3>
                         <div class="contact-detail">
                             <div class="cd-icon cd-icon--orange">📍</div>
                             <div>
                                 <strong>Address</strong>
-                                <span id="address-text">Shop, Periya Rose Milk, No:5, Hayathkhan Sahib Street, Near 24
-                                    Hours Bus Stand, Periyar, Madurai Main, Tamil Nadu - 625001</span>
+                                <span id="address-text">123 Main Food Street, Commercial Hub, Near Central Station,
+                                    Madurai Main, Tamil Nadu - 625001</span>
                             </div>
                         </div>
                         <div class="contact-detail">
                             <div class="cd-icon cd-icon--red">📞</div>
                             <div>
                                 <strong>Phone Number</strong>
-                                <a href="tel:+919597961293">+91 95979 61293</a>
+                                <a href="tel:+919876543210">+91 98765 43210</a>
                             </div>
                         </div>
                         <div class="contact-detail">
@@ -3895,7 +3973,7 @@
                     </div>
 
                     <div class="contact-actions">
-                        <a href="tel:+919597961293" class="btn-action btn-action--primary">📞 Call Store</a>
+                        <a href="tel:+919876543210" class="btn-action btn-action--primary">📞 Call Store</a>
                         <button id="copy-address-btn" class="btn-action btn-action--secondary">📋 Copy Address</button>
                     </div>
                 </div>
@@ -3903,7 +3981,7 @@
                 <div class="map-box-card reveal-right">
                     <div class="map-box-header">
                         <span>📍 Madurai Main Store</span>
-                        <a href="https://maps.google.com/?q=Periyar+Madurai+Chicken+Location" target="_blank"
+                        <a href="https://maps.google.com/?q=Madurai+Chicken+Dinner" target="_blank"
                             rel="noopener">🗺️ Open Map</a>
                     </div>
                     <iframe class="map-box-frame"
@@ -3933,7 +4011,7 @@
                 <div class="footer-col">
                     <a href="#" class="footer-brand-logo">
                         <div class="logo-icon">🍗</div>
-                        <div class="logo-text">Chicken Location<span>Madurai Main</span></div>
+                        <div class="logo-text">Chicken Dinner<span>Madurai Main</span></div>
                     </a>
                     <p class="footer-desc">
                         Madurai's favorite destination for fresh fire-grilled chicken, crispy fried chicken, juicy
@@ -3975,25 +4053,25 @@
                     <h4>Visit Store</h4>
                     <div class="footer-info-item">
                         <span class="icon">📍</span>
-                        <span>Shop, Periya Rose Milk, No:5, Hayathkhan Sahib St, Periyar, Madurai - 625001</span>
+                        <span>123 Main Food Street, Commercial Hub, Madurai - 625001</span>
                     </div>
                     <div class="footer-info-item">
                         <span class="icon">📞</span>
-                        <a href="tel:+919597961293">+91 95979 61293</a>
+                        <a href="tel:+919876543210">+91 98765 43210</a>
                     </div>
                     <div class="footer-info-item">
                         <span class="icon">🕙</span>
                         <span>Open Daily: 11:00 AM – 10:30 PM</span>
                     </div>
                     <div style="margin-top: 14px;">
-                        <a href="tel:+919597961293" class="footer-cta-btn">📞 Order Now</a>
+                        <a href="tel:+919876543210" class="footer-cta-btn">📞 Order Now</a>
                     </div>
                 </div>
             </div>
 
             <!-- Footer Bottom Bar -->
             <div class="footer-bottom">
-                <p>© 2026 Chicken Location – Madurai. All rights reserved.</p>
+                <p>© 2026 Chicken Dinner – Madurai. All rights reserved.</p>
                 <div class="footer-bottom-badges">
                     <span>🍗 100% Fresh Chicken</span>
                     <span>🔥 Fire-Grilled Taste</span>
