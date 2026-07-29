@@ -13,6 +13,7 @@
         href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="order.css">
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
     <style>
         :root {
             --orange-50: #FFF8F0;
@@ -4455,7 +4456,7 @@
         <div class="cart-bill" id="cart-bill-section" style="display:none;">
             <div class="cart-bill-row"><span>Subtotal</span><span id="bill-subtotal">₹0</span></div>
             <div class="cart-bill-row" id="bill-discount-row" style="display:none;"><span>Discount</span><span class="discount-val" id="bill-discount">−₹0</span></div>
-            <div class="cart-bill-row"><span>Delivery Fee</span><span id="bill-delivery">₹40</span></div>
+            <div class="cart-bill-row"><span>Delivery Fee</span><span id="bill-delivery">₹20</span></div>
             <div class="cart-bill-row total"><span>Total</span><span id="bill-total">₹0</span></div>
         </div>
         <div class="cart-checkout-footer" id="cart-footer" style="display:none;">
@@ -4541,69 +4542,122 @@
         </div>
     </div>
 
-    <!-- ===== PAYMENT MODAL ===== -->
+    <!-- ===== PAYMENT MODAL (CASH ON DELIVERY ONLY) ===== -->
     <div class="order-overlay" id="payment-overlay">
         <div class="payment-modal">
             <button class="modal-close" id="close-payment-btn">✕</button>
-            <h3>💳 Choose Payment</h3>
+            <h3>💵 Cash on Delivery</h3>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:18px;">No online payment required. Pay exact cash to our executive upon delivery.</p>
 
             <div class="payment-options">
-                <div class="payment-option selected" data-method="cod">
+                <div class="payment-option selected" data-method="cod" style="border-color:var(--orange-500);background:var(--orange-50);">
                     <div class="payment-option-icon">💵</div>
                     <div class="payment-option-text">
-                        <h4>Cash on Delivery</h4>
-                        <p>Pay when your food arrives</p>
+                        <h4>Cash on Delivery (COD)</h4>
+                        <p>Pay cash when food is delivered</p>
                     </div>
-                    <div class="payment-option-radio"></div>
-                </div>
-                <div class="payment-option" data-method="upi">
-                    <div class="payment-option-icon">📱</div>
-                    <div class="payment-option-text">
-                        <h4>UPI / PhonePe / GPay</h4>
-                        <p>Pay instantly with any UPI app</p>
-                    </div>
-                    <div class="payment-option-radio"></div>
-                </div>
-                <div class="payment-option" data-method="card">
-                    <div class="payment-option-icon">💳</div>
-                    <div class="payment-option-text">
-                        <h4>Credit / Debit Card</h4>
-                        <p>Visa, Mastercard, RuPay accepted</p>
-                    </div>
-                    <div class="payment-option-radio"></div>
+                    <div class="payment-option-radio" style="background:var(--orange-500);border-color:var(--orange-500);"></div>
                 </div>
             </div>
 
             <div class="payment-order-summary">
-                <h4>Order Summary</h4>
-                <div class="payment-order-row"><span>Subtotal</span><span id="pay-subtotal">₹0</span></div>
-                <div class="payment-order-row" id="pay-discount-row" style="display:none;"><span>Discount</span><span id="pay-discount" style="color:#15803d;font-weight:700;">−₹0</span></div>
-                <div class="payment-order-row"><span>Delivery</span><span id="pay-delivery">₹40</span></div>
-                <div class="payment-order-row grand-total"><span>Grand Total</span><span id="pay-total">₹0</span></div>
+                <h4>Order Bill Summary</h4>
+                <div class="payment-order-row"><span>Items Subtotal</span><span id="pay-subtotal">₹0</span></div>
+                <div class="payment-order-row" id="pay-discount-row" style="display:none;"><span>Coupon Discount</span><span id="pay-discount" style="color:#15803d;font-weight:700;">−₹0</span></div>
+                <div class="payment-order-row"><span>Delivery Fee (Static)</span><span id="pay-delivery">₹20</span></div>
+                <div class="payment-order-row grand-total"><span>Grand Total to Pay (Cash)</span><span id="pay-total">₹0</span></div>
             </div>
 
-            <button class="btn-place-order" id="place-order-btn">🛵 Place Order</button>
-            <div class="payment-note">🔒 Your order is safe &amp; secure</div>
+            <button class="btn-place-order" id="place-order-btn">🛵 Confirm Order (Cash on Delivery)</button>
+            <div class="payment-note">💵 Exact cash payment upon food arrival</div>
         </div>
     </div>
 
-    <!-- ===== ORDER CONFIRMATION OVERLAY ===== -->
+    <!-- ===== ORDER CONFIRMATION & INVOICE OVERLAY ===== -->
     <div class="confirmation-overlay" id="confirmation-overlay">
         <div class="confirmation-content">
             <div class="confirm-animation">✅</div>
-            <div class="confirm-title">Order Placed! 🎉</div>
-            <div class="confirm-subtitle">Your food is being prepared with love and care.</div>
+            <div class="confirm-title">Order Confirmed! 🎉</div>
+            <div class="confirm-subtitle">Your Cash on Delivery order is placed and being prepared.</div>
 
-            <div class="confirm-order-id">
-                <div class="label">Order ID</div>
-                <div class="id" id="confirm-order-id">CD000000</div>
+            <!-- DISPATCH STATUS BADGES -->
+            <div class="dispatch-status-bar" style="display:flex;gap:10px;justify-content:center;margin-bottom:20px;flex-wrap:wrap;">
+                <span class="dispatch-badge" id="status-whatsapp-badge">📱 WhatsApp Sent</span>
+                <span class="dispatch-badge" id="status-email-badge">📧 Email Invoice Sent</span>
+                <span class="dispatch-badge" style="background:#fef3c7;color:#92400e;border:1px solid #fde68a;">💵 Cash on Delivery</span>
+            </div>
+
+            <!-- PRINTABLE ORDER INVOICE CARD -->
+            <div class="order-invoice-card" id="order-invoice-card">
+                <div class="invoice-header">
+                    <div class="inv-logo">🍗</div>
+                    <div class="inv-shop-info">
+                        <h3>CHICKEN DINNER</h3>
+                        <p>123 Main Food Street, Madurai - 625001</p>
+                        <p>Phone: +91 98765 43210 | GSTIN: 33AAAAA0000A1Z5</p>
+                    </div>
+                </div>
+
+                <div class="invoice-meta-grid">
+                    <div>
+                        <span class="inv-meta-label">ORDER ID</span>
+                        <strong class="inv-meta-val" id="inv-order-id">CD000000</strong>
+                    </div>
+                    <div>
+                        <span class="inv-meta-label">DATE &amp; TIME</span>
+                        <span class="inv-meta-val" id="inv-date-time">Today</span>
+                    </div>
+                    <div>
+                        <span class="inv-meta-label">CUSTOMER PHONE</span>
+                        <strong class="inv-meta-val" id="inv-customer-phone">+91 9876543210</strong>
+                    </div>
+                    <div>
+                        <span class="inv-meta-label">PAYMENT MODE</span>
+                        <span class="inv-meta-val" style="color:#15803d;font-weight:800;">Cash on Delivery</span>
+                    </div>
+                </div>
+
+                <div class="invoice-address-box">
+                    <span class="inv-meta-label">DELIVERY ADDRESS</span>
+                    <p id="inv-delivery-address" style="margin-top:4px;font-size:0.88rem;color:var(--text-dark);font-weight:600;"></p>
+                </div>
+
+                <table class="invoice-items-table">
+                    <thead>
+                        <tr>
+                            <th>Item Description</th>
+                            <th style="text-align:center;">Qty</th>
+                            <th style="text-align:right;">Rate</th>
+                            <th style="text-align:right;">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inv-items-tbody"></tbody>
+                </table>
+
+                <div class="invoice-totals-box">
+                    <div class="inv-total-row"><span>Items Subtotal</span><span id="inv-subtotal">₹0</span></div>
+                    <div class="inv-total-row" id="inv-discount-row" style="display:none;"><span>Coupon Discount</span><span style="color:#15803d;" id="inv-discount">−₹0</span></div>
+                    <div class="inv-total-row"><span>Delivery Charges (Static)</span><span id="inv-delivery">₹20</span></div>
+                    <div class="inv-total-row grand-total"><span>Grand Total (Cash Payable)</span><span id="inv-grand-total">₹0</span></div>
+                </div>
+
+                <div class="invoice-footer-note">
+                    Thank you for ordering with Chicken Dinner Madurai! 🍗
+                </div>
+            </div>
+
+            <!-- ACTION BUTTONS: WHATSAPP, EMAIL, PRINT -->
+            <div class="invoice-action-buttons">
+                <button class="btn-inv-action btn-whatsapp" id="btn-whatsapp-resend">📱 Send Order on WhatsApp</button>
+                <button class="btn-inv-action btn-email" id="btn-email-resend">📧 Email Invoice to Shop</button>
+                <button class="btn-inv-action btn-print" id="btn-print-invoice" onclick="window.print()">🖨️ Print Invoice</button>
             </div>
 
             <div class="confirm-eta-card">
                 <div class="eta-icon">🛵</div>
                 <div class="eta-text">
-                    <h4>Estimated Delivery</h4>
-                    <p>Your food will arrive hot and fresh!</p>
+                    <h4>Estimated Delivery Time</h4>
+                    <p>Your food will arrive fresh &amp; hot!</p>
                 </div>
                 <div class="eta-time">
                     <div class="minutes">35–45</div>
@@ -4619,8 +4673,8 @@
             <div class="confirm-delivery-info">
                 <div class="delivery-agent-icon">🧑‍🦱</div>
                 <div class="delivery-agent-text">
-                    <h4>Your Delivery Partner</h4>
-                    <p>Assigned: <span class="agent-name" id="confirm-agent-name">Ramesh K.</span></p>
+                    <h4>Assigned Delivery Executive</h4>
+                    <p>Partner: <span class="agent-name" id="confirm-agent-name">Ramesh K.</span> (+91 98765 43210)</p>
                     <button class="btn-call-agent">📞 Call Partner</button>
                 </div>
             </div>

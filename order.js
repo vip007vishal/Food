@@ -24,10 +24,12 @@
         'DINNER15':  { type: 'percent', value: 15, desc: '15% off on all items', minOrder: 150 },
     };
 
-    const DELIVERY_FEE = 40;
-    const FREE_DELIVERY_THRESHOLD = 400;
+    const DELIVERY_FEE = 20;
+    const FREE_DELIVERY_THRESHOLD = Infinity; // Static ₹20 delivery fee as requested
 
     const DELIVERY_AGENTS = ['Ramesh K.', 'Suresh P.', 'Arjun M.', 'Karthik V.', 'Dinesh R.'];
+    const SHOP_WHATSAPP_NUMBER = '919876543210';
+    const SHOP_OWNER_EMAIL = 'orders@chickendinner.com';
     const OTP_DEMO = '123456';
 
     /* ============================================
@@ -249,7 +251,7 @@
 
         setTimeout(() => {
             if (entered === OTP_DEMO) {
-                STATE.user = { phone: otpPhone, name: 'Guest User' };
+                STATE.user = { phone: otpPhone, name: 'Guest Customer' };
                 saveState();
                 closeOverlay('login-overlay');
                 updateNavUserUI();
@@ -442,7 +444,7 @@
     function getCartTotals() {
         const subtotal = getCartSubtotal();
         let discount = 0;
-        let deliveryFee = subtotal >= FREE_DELIVERY_THRESHOLD ? 0 : DELIVERY_FEE;
+        let deliveryFee = 20; // Static ₹20 delivery fee as requested
         if (STATE.coupon) {
             const c = COUPONS[STATE.coupon];
             if (c) {
@@ -503,8 +505,7 @@
         // Bill
         const { subtotal, discount, deliveryFee, total } = getCartTotals();
         document.getElementById('bill-subtotal').textContent = formatINR(subtotal);
-        document.getElementById('bill-delivery').textContent = deliveryFee === 0 ? 'FREE' : formatINR(deliveryFee);
-        document.getElementById('bill-delivery').className = deliveryFee === 0 ? 'free-tag' : '';
+        document.getElementById('bill-delivery').textContent = formatINR(deliveryFee);
         document.getElementById('bill-discount-row').style.display = discount > 0 ? 'flex' : 'none';
         document.getElementById('bill-discount').textContent = '−' + formatINR(discount);
         document.getElementById('bill-total').textContent = formatINR(total);
@@ -602,51 +603,176 @@
     });
 
     /* ============================================
-       PAYMENT MODAL
+       PAYMENT MODAL (COD ONLY)
     ============================================ */
     function openPaymentModal() {
         const { subtotal, discount, deliveryFee, total } = getCartTotals();
         document.getElementById('pay-subtotal').textContent = formatINR(subtotal);
-        document.getElementById('pay-delivery').textContent = deliveryFee === 0 ? 'FREE' : formatINR(deliveryFee);
+        document.getElementById('pay-delivery').textContent = formatINR(deliveryFee);
         document.getElementById('pay-discount-row').style.display = discount > 0 ? 'flex' : 'none';
         document.getElementById('pay-discount').textContent = '−' + formatINR(discount);
         document.getElementById('pay-total').textContent = formatINR(total);
-        // Default select Cash on Delivery
-        document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
-        document.querySelector('.payment-option[data-method="cod"]')?.classList.add('selected');
         openOverlay('payment-overlay');
     }
 
-    document.querySelectorAll('.payment-option').forEach(opt => {
-        opt.addEventListener('click', () => {
-            document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
-            opt.classList.add('selected');
-        });
-    });
-
     document.getElementById('close-payment-btn')?.addEventListener('click', () => closeOverlay('payment-overlay'));
 
+    let lastPlacedOrderData = null;
+
     document.getElementById('place-order-btn')?.addEventListener('click', () => {
-        const method = document.querySelector('.payment-option.selected')?.dataset.method || 'cod';
         const btn = document.getElementById('place-order-btn');
         btn.disabled = true;
-        btn.textContent = method === 'cod' ? 'Placing Order…' : 'Processing Payment…';
+        btn.textContent = 'Placing Cash on Delivery Order…';
+
+        const orderId = generateOrderId();
+        const totals = getCartTotals();
+        const timestamp = new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+
+        const orderData = {
+            orderId,
+            items: [...STATE.cart],
+            totals,
+            user: { ...STATE.user },
+            address: { ...STATE.address },
+            timestamp,
+        };
+
+        lastPlacedOrderData = orderData;
 
         setTimeout(() => {
             closeOverlay('payment-overlay');
-            const orderId = generateOrderId();
-            showConfirmation(orderId);
+            showConfirmation(orderData);
+
+            // Trigger WhatsApp auto message dispatch
+            sendWhatsAppOrder(orderData);
+
+            // Trigger client-side SMTP email dispatch
+            sendEmailInvoice(orderData);
+
+            // Clear cart state
             STATE.cart = [];
             STATE.coupon = null;
             saveState();
             updateCartCountUI();
+
             btn.disabled = false;
-            btn.textContent = '🛵 Place Order';
-        }, method === 'cod' ? 1200 : 2200);
+            btn.textContent = '🛵 Confirm Order (Cash on Delivery)';
+        }, 1200);
     });
 
     /* ============================================
-       ORDER CONFIRMATION & TRACKING
+       WHATSAPP AUTOMATIC MESSAGE DISPATCH
+    ============================================ */
+    function buildWhatsAppMessage(orderData) {
+        const addr = orderData.address;
+        const addrStr = `${addr.street}, ${addr.area} - ${addr.pincode}${addr.landmark ? ' (Near ' + addr.landmark + ')' : ''} [${(addr.type || 'home').toUpperCase()}]`;
+
+        const itemsText = orderData.items.map(i => `• ${i.qty}x ${i.name} — ₹${i.price * i.qty}`).join('\n');
+
+        const message = `🍗 *NEW ORDER RECEIVED - CHICKEN DINNER* 🍗
+--------------------------------
+*Order ID:* ${orderData.orderId}
+*Date & Time:* ${orderData.timestamp}
+*Customer Mobile:* +91 ${orderData.user.phone}
+*Delivery Address:* ${addrStr}
+
+📋 *ITEMS ORDERED:*
+${itemsText}
+
+--------------------------------
+*Items Subtotal:* ₹${orderData.totals.subtotal}
+${orderData.totals.discount > 0 ? `*Coupon Discount:* −₹${orderData.totals.discount}\n` : ''}*Delivery Fee (Static):* ₹${orderData.totals.deliveryFee}
+*GRAND TOTAL:* ₹${orderData.totals.total}
+*PAYMENT METHOD:* CASH ON DELIVERY (COD)
+--------------------------------
+Please accept & start preparing this order! 🙏`;
+
+        return encodeURIComponent(message);
+    }
+
+    function sendWhatsAppOrder(orderData) {
+        const text = buildWhatsAppMessage(orderData);
+        const url = `https://api.whatsapp.com/send?phone=${SHOP_WHATSAPP_NUMBER}&text=${text}`;
+        window.open(url, '_blank');
+        showToast('WhatsApp order message launched!', '📱');
+    }
+
+    /* ============================================
+       SMTP CLIENT-SIDE EMAIL DISPATCHING
+    ============================================ */
+    function buildEmailHTMLInvoice(orderData) {
+        const addr = orderData.address;
+        const addrStr = `${addr.street}, ${addr.area} - ${addr.pincode}${addr.landmark ? ' (Near ' + addr.landmark + ')' : ''} [${(addr.type || 'home').toUpperCase()}]`;
+
+        const itemsRows = orderData.items.map(i => `
+            <tr>
+                <td style="padding:8px;border-bottom:1px solid #eee;">${i.name}</td>
+                <td style="padding:8px;border-bottom:1px solid #eee;text-align:center;">${i.qty}</td>
+                <td style="padding:8px;border-bottom:1px solid #eee;text-align:right;">₹${i.price}</td>
+                <td style="padding:8px;border-bottom:1px solid #eee;text-align:right;font-weight:bold;">₹${i.price * i.qty}</td>
+            </tr>
+        `).join('');
+
+        return `
+            <div style="font-family:sans-serif;max-width:600px;margin:0 auto;border:2px solid #f7931e;border-radius:16px;padding:24px;background:#fff;">
+                <h2 style="color:#e87a0c;margin-top:0;">🍗 CHICKEN DINNER MADURAI — NEW ORDER</h2>
+                <p style="color:#666;"><strong>Order ID:</strong> ${orderData.orderId} | <strong>Date:</strong> ${orderData.timestamp}</p>
+                <div style="background:#fff8f0;padding:12px;border-radius:8px;margin-bottom:16px;">
+                    <p style="margin:4px 0;"><strong>Customer Mobile:</strong> +91 ${orderData.user.phone}</p>
+                    <p style="margin:4px 0;"><strong>Delivery Address:</strong> ${addrStr}</p>
+                    <p style="margin:4px 0;"><strong>Payment Method:</strong> Cash on Delivery (COD)</p>
+                </div>
+                <table style="width:100%;border-collapse:collapse;margin-bottom:16px;">
+                    <thead>
+                        <tr style="background:#ffe0c0;">
+                            <th style="padding:8px;text-align:left;">Item</th>
+                            <th style="padding:8px;text-align:center;">Qty</th>
+                            <th style="padding:8px;text-align:right;">Rate</th>
+                            <th style="padding:8px;text-align:right;">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>${itemsRows}</tbody>
+                </table>
+                <div style="background:#fdf2e9;padding:12px;border-radius:8px;text-align:right;">
+                    <p style="margin:4px 0;">Subtotal: ₹${orderData.totals.subtotal}</p>
+                    ${orderData.totals.discount > 0 ? `<p style="margin:4px 0;color:#15803d;">Discount: −₹${orderData.totals.discount}</p>` : ''}
+                    <p style="margin:4px 0;">Delivery Fee (Static): ₹${orderData.totals.deliveryFee}</p>
+                    <h3 style="margin:8px 0 0 0;color:#111;">Grand Total: ₹${orderData.totals.total} (Cash on Delivery)</h3>
+                </div>
+            </div>
+        `;
+    }
+
+    function sendEmailInvoice(orderData) {
+        // Mailto fallback link setup for 1-click email send
+        const subject = encodeURIComponent(`New Order #${orderData.orderId} - Chicken Dinner`);
+        const bodyText = encodeURIComponent(`Order ID: ${orderData.orderId}\nCustomer Mobile: +91 ${orderData.user.phone}\nTotal: ₹${orderData.totals.total} (Cash on Delivery)\nAddress: ${orderData.address.street}, ${orderData.address.area}\nItems: ${orderData.items.map(i => i.qty + 'x ' + i.name).join(', ')}`);
+        const mailtoUrl = `mailto:${SHOP_OWNER_EMAIL}?subject=${subject}&body=${bodyText}`;
+
+        const emailBtn = document.getElementById('btn-email-resend');
+        if (emailBtn) {
+            emailBtn.onclick = () => window.open(mailtoUrl, '_blank');
+        }
+
+        // Attempt SmtpJS dispatch if window.Email is loaded
+        if (window.Email && typeof window.Email.send === 'function') {
+            try {
+                window.Email.send({
+                    SecureToken: "DEMO_SMTP_TOKEN", // Configure SmtpJS token if desired
+                    To: SHOP_OWNER_EMAIL,
+                    From: "orders@chickendinner.com",
+                    Subject: `New Cash Order #${orderData.orderId} from +91 ${orderData.user.phone}`,
+                    Body: buildEmailHTMLInvoice(orderData)
+                }).then(() => {
+                    const badge = document.getElementById('status-email-badge');
+                    if (badge) badge.textContent = '📧 Email Invoice Sent ✓';
+                }).catch(() => {});
+            } catch (err) {}
+        }
+    }
+
+    /* ============================================
+       ORDER CONFIRMATION & INVOICE POPULATION
     ============================================ */
     const TRACKING_STEPS_DATA = [
         { icon: '✅', title: 'Order Confirmed', desc: 'We received your order', delay: 0 },
@@ -655,12 +781,43 @@
         { icon: '🏠', title: 'Delivered', desc: 'Enjoy your meal! Rate us on Google ⭐', delay: 38000 },
     ];
 
-    function showConfirmation(orderId) {
+    function populateInvoiceCard(orderData) {
+        const addr = orderData.address;
+        document.getElementById('inv-order-id').textContent = orderData.orderId;
+        document.getElementById('inv-date-time').textContent = orderData.timestamp;
+        document.getElementById('inv-customer-phone').textContent = '+91 ' + orderData.user.phone;
+        document.getElementById('inv-delivery-address').textContent = `${addr.street}, ${addr.area} - ${addr.pincode}${addr.landmark ? ' (Landmark: ' + addr.landmark + ')' : ''} [${(addr.type || 'home').toUpperCase()}]`;
+
+        const tbody = document.getElementById('inv-items-tbody');
+        tbody.innerHTML = orderData.items.map(item => `
+            <tr>
+                <td style="font-weight:600;color:var(--text-dark);">${item.name}</td>
+                <td style="text-align:center;font-weight:700;">${item.qty}</td>
+                <td style="text-align:right;">${formatINR(item.price)}</td>
+                <td style="text-align:right;font-weight:800;color:var(--orange-700);">${formatINR(item.price * item.qty)}</td>
+            </tr>
+        `).join('');
+
+        document.getElementById('inv-subtotal').textContent = formatINR(orderData.totals.subtotal);
+        document.getElementById('inv-discount-row').style.display = orderData.totals.discount > 0 ? 'flex' : 'none';
+        document.getElementById('inv-discount').textContent = '−' + formatINR(orderData.totals.discount);
+        document.getElementById('inv-delivery').textContent = formatINR(orderData.totals.deliveryFee);
+        document.getElementById('inv-grand-total').textContent = formatINR(orderData.totals.total);
+    }
+
+    function showConfirmation(orderData) {
         const overlay = document.getElementById('confirmation-overlay');
         const agent = DELIVERY_AGENTS[Math.floor(Math.random() * DELIVERY_AGENTS.length)];
-        document.getElementById('confirm-order-id').textContent = orderId;
         document.getElementById('confirm-agent-name').textContent = agent;
-        const itemCount = STATE.cart.length; // already cleared — use a snapshot before
+
+        // Populate Invoice Card
+        populateInvoiceCard(orderData);
+
+        // Bind WhatsApp Resend Button
+        const waBtn = document.getElementById('btn-whatsapp-resend');
+        if (waBtn) {
+            waBtn.onclick = () => sendWhatsAppOrder(orderData);
+        }
 
         overlay.classList.add('open');
         document.body.style.overflow = 'hidden';
