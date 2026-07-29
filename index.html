@@ -383,6 +383,64 @@
             white-space: nowrap;
         }
 
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            flex-shrink: 0;
+            transition: transform var(--transition-bounce);
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--orange-500), var(--red-500));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            color: white;
+            box-shadow: 0 4px 16px rgba(230, 57, 70, 0.35);
+            transition: transform var(--transition-bounce);
+            animation: logoSpin 8s ease-in-out infinite;
+        }
+
+        @keyframes logoSpin {
+            0%, 90%, 100% {
+                transform: rotate(0deg) scale(1);
+            }
+            95% {
+                transform: rotate(-12deg) scale(1.1);
+            }
+        }
+
+        .logo-group:hover .logo-icon {
+            transform: scale(1.12) rotate(-8deg);
+            animation: none;
+        }
+
+        .logo-text {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.35rem;
+            color: var(--text-dark);
+            letter-spacing: -0.4px;
+            line-height: 1.15;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-text span {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--orange-600);
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-top: 1px;
+        }
+
         .nav-links {
             display: flex;
             align-items: center;
@@ -595,15 +653,70 @@
             animation: fadeInUp 0.8s ease-out 0.3s both;
         }
 
-        .hero-stat {
-            text-align: center;
-            background: var(--white);
-            padding: 18px 24px;
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-md);
-            min-width: 120px;
-            transition: all var(--transition-bounce);
-            cursor: default;
+        /* Hero Buttons System */
+        .hero-order-cta {
+            margin-top: 32px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .btn-hero-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #FF6B35, #E63946);
+            color: #ffffff !important;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            padding: 16px 36px;
+            border-radius: 50px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(230, 57, 70, 0.4), 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-hero-primary:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 14px 40px rgba(230, 57, 70, 0.55);
+            background: linear-gradient(135deg, #E63946, #D62828);
+        }
+
+        .btn-hero-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #ffffff;
+            color: var(--text-dark) !important;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            padding: 16px 36px;
+            border-radius: 50px;
+            border: 2px solid rgba(247, 147, 30, 0.35);
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+
+        .btn-hero-secondary:hover {
+            background: var(--orange-50);
+            color: var(--orange-600) !important;
+            border-color: var(--orange-500);
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 10px 30px rgba(247, 147, 30, 0.25);
         }
 
         .hero-stat:hover {
@@ -2537,9 +2650,13 @@
                     <div class="stat-label">Open Weekly</div>
                 </div>
             </div>
-            <div class="hero-order-cta" style="margin-top:28px;display:flex;gap:16px;flex-wrap:wrap;justify-content:center;">
-                <button class="btn-order-now" id="hero-order-now-btn" style="font-size:1.05rem;padding:16px 40px;">🛵 Order Online</button>
-                <a href="#menu" class="btn-order-now" style="background:rgba(255,255,255,0.12);backdrop-filter:blur(8px);border:1.5px solid rgba(255,255,255,0.25);text-decoration:none;font-size:1.05rem;padding:16px 32px;">📋 View Menu</a>
+            <div class="hero-order-cta">
+                <button class="btn-hero-primary ripple-container" id="hero-order-now-btn">
+                    <span>🛵</span> <span>Order Online</span>
+                </button>
+                <a href="#menu" class="btn-hero-secondary ripple-container">
+                    <span>📋</span> <span>View Menu</span>
+                </a>
             </div>
             <div class="scroll-indicator">↓</div>
         </div>
