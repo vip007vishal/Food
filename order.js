@@ -835,7 +835,8 @@ Please accept & start preparing this order! 🙏`;
         }
 
         overlay.classList.add('open');
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = 'auto';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
 
         // Reset and animate tracking steps
         const stepsEl = document.getElementById('tracking-steps-list');
