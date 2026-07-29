@@ -1,0 +1,194 @@
+{
+  "orders": [
+    {
+      "orderId": "CD5UXOK3DQC",
+      "items": [
+        {
+          "id": "item_1",
+          "name": "Location Chicken Filled Burger",
+          "price": 150,
+          "emoji": "🍔",
+          "qty": 2,
+          "lineTotal": 300
+        }
+      ],
+      "totals": {
+        "subtotal": 300,
+        "discount": 60,
+        "deliveryFee": 20,
+        "total": 260
+      },
+      "user": {
+        "phone": "9597961293",
+        "name": "Test Customer"
+      },
+      "address": {
+        "street": "123 Main Street",
+        "area": "Periyar",
+        "pincode": "625001",
+        "landmark": "",
+        "type": "home"
+      },
+      "paymentMethod": "CASH_ON_DELIVERY",
+      "status": "CONFIRMED",
+      "assignedAgent": "Ramesh K.",
+      "timestamp": "29 Jul 2026, 2:33 pm",
+      "createdAt": "2026-07-29T09:03:26.355Z"
+    },
+    {
+      "orderId": "CD5URA5FTYB",
+      "items": [
+        {
+          "id": "item_1",
+          "name": "Chicken Filled Burger",
+          "price": 150,
+          "emoji": "🍔",
+          "qty": 2,
+          "lineTotal": 300
+        }
+      ],
+      "totals": {
+        "subtotal": 300,
+        "discount": 60,
+        "deliveryFee": 20,
+        "total": 260
+      },
+      "user": {
+        "phone": "9876543210",
+        "name": "Vishal"
+      },
+      "address": {
+        "street": "123 Main Food Street",
+        "area": "Commercial Hub",
+        "pincode": "625001",
+        "landmark": "",
+        "type": "home"
+      },
+      "paymentMethod": "CASH_ON_DELIVERY",
+      "status": "CONFIRMED",
+      "assignedAgent": "Dinesh R.",
+      "timestamp": "29 Jul 2026, 2:28 pm",
+      "createdAt": "2026-07-29T08:58:27.751Z"
+    }
+  ],
+  "users": [],
+  "menu": [
+    {
+      "id": "item_1",
+      "name": "Location Chicken Filled Burger",
+      "category": "burgers",
+      "price": 150,
+      "emoji": "🍔",
+      "badge": "🔥 Hot"
+    },
+    {
+      "id": "item_2",
+      "name": "Classic Chicken Burger",
+      "category": "burgers",
+      "price": 140,
+      "emoji": "🍔"
+    },
+    {
+      "id": "item_3",
+      "name": "Classic Grilled Chicken Burger",
+      "category": "burgers",
+      "price": 140,
+      "emoji": "🍔"
+    },
+    {
+      "id": "item_4",
+      "name": "Juicy Cheesy Stuffed Burger",
+      "category": "burgers",
+      "price": 180,
+      "emoji": "🍔"
+    },
+    {
+      "id": "item_5",
+      "name": "Sky Storm TNT Burger",
+      "category": "burgers",
+      "price": 160,
+      "emoji": "🍔"
+    },
+    {
+      "id": "item_6",
+      "name": "Sky Scraper Burger (Tower)",
+      "category": "burgers",
+      "price": 320,
+      "emoji": "🍔",
+      "badge": "⭐ Best"
+    },
+    {
+      "id": "item_7",
+      "name": "Double Town Chicken Burger",
+      "category": "burgers",
+      "price": 200,
+      "emoji": "🍔"
+    },
+    {
+      "id": "item_8",
+      "name": "Original Grilled Chicken (Half)",
+      "category": "fried",
+      "price": 240,
+      "emoji": "🍗",
+      "badge": "⭐ Top Rated"
+    },
+    {
+      "id": "item_9",
+      "name": "Original Grilled Chicken (Full)",
+      "category": "fried",
+      "price": 460,
+      "emoji": "🍗"
+    },
+    {
+      "id": "item_10",
+      "name": "Crispy Fried Chicken (2 Pcs)",
+      "category": "fried",
+      "price": 180,
+      "emoji": "🍗"
+    },
+    {
+      "id": "item_11",
+      "name": "Crispy Fried Chicken (4 Pcs)",
+      "category": "fried",
+      "price": 340,
+      "emoji": "🍗"
+    },
+    {
+      "id": "item_12",
+      "name": "Classic Chicken Shawarma Roll",
+      "category": "shawarma",
+      "price": 120,
+      "emoji": "🌯"
+    },
+    {
+      "id": "item_13",
+      "name": "Special Peri Peri Shawarma",
+      "category": "shawarma",
+      "price": 150,
+      "emoji": "🌯",
+      "badge": "🔥 Hot"
+    },
+    {
+      "id": "item_14",
+      "name": "Mexican Cheese Shawarma",
+      "category": "shawarma",
+      "price": 160,
+      "emoji": "🌯"
+    },
+    {
+      "id": "item_15",
+      "name": "Chicken Cheese Pizza (Medium)",
+      "category": "pizza",
+      "price": 280,
+      "emoji": "🍕"
+    },
+    {
+      "id": "item_16",
+      "name": "Supreme Meat Feast Pizza (Large)",
+      "category": "pizza",
+      "price": 450,
+      "emoji": "🍕",
+      "badge": "⭐ Best"
+    }
+  ]
+}

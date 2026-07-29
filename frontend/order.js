@@ -9,9 +9,9 @@
     /* ============================================
        API BASE URL CONFIGURATION
     ============================================ */
-    const API_BASE = window.location.origin.startsWith('file:') || window.location.origin.includes('127.0.0.1')
-        ? 'http://localhost:3000'
-        : '';
+    const API_BASE = (window.APP_CONFIG && window.APP_CONFIG.API_BASE)
+        ? window.APP_CONFIG.API_BASE
+        : (window.location.origin.startsWith('file:') || window.location.origin.includes('127.0.0.1') ? 'http://localhost:3000' : '');
 
     /* ============================================
        STATE
